@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Compass, Briefcase, Mail, Phone, ExternalLink, X, Moon, Sun, Sparkles } from 'lucide-react';
+import { Search, Compass, Briefcase, Mail, Phone, X, Moon, Sun, Sparkles } from 'lucide-react';
 import { WhatsAppIcon } from './Icons';
 import { portfolioData } from '../data/portfolioData';
 import { useToast } from './Toast';
@@ -35,7 +35,7 @@ export default function CommandPalette({ isOpen, onClose, setTheme }) {
     // Quick Actions
     {
       id: 'action-whatsapp',
-      label: 'Open WhatsApp Direct Chat (+923298339626)',
+      label: `Open WhatsApp Direct Chat (${portfolioData.personal.phoneFormatted})`,
       category: 'Actions',
       icon: WhatsAppIcon,
       action: () => window.open(portfolioData.personal.whatsappUrl, '_blank')
@@ -59,20 +59,6 @@ export default function CommandPalette({ isOpen, onClose, setTheme }) {
         navigator.clipboard.writeText(portfolioData.personal.email);
         addToast('Studio email copied to clipboard!');
       }
-    },
-    {
-      id: 'action-behance',
-      label: 'Visit Behance Portfolio',
-      category: 'Socials',
-      icon: ExternalLink,
-      action: () => window.open('https://behance.net', '_blank')
-    },
-    {
-      id: 'action-dribbble',
-      label: 'Visit Dribbble Shots',
-      category: 'Socials',
-      icon: ExternalLink,
-      action: () => window.open('https://dribbble.com', '_blank')
     }
   ];
 

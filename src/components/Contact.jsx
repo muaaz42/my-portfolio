@@ -16,8 +16,6 @@ export default function Contact() {
     message: ''
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
@@ -37,19 +35,17 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       addToast('Please complete all required fields.', 'error');
       return;
     }
 
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      addToast('Thank you! Your design brief has been sent successfully.');
-      setFormData({ name: '', email: '', projectType: 'Brand Identity', budget: '$500 - $1,500', message: '' });
-    }, 1200);
+    const subject = encodeURIComponent(`Design brief — ${formData.projectType}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nProject: ${formData.projectType}\nBudget: ${formData.budget}\n\n${formData.message}`
+    );
+    window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`;
+    addToast('Opening your email app to send the brief.');
   };
 
   return (
@@ -123,7 +119,7 @@ export default function Contact() {
                     <div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Direct Phone / Studio</div>
                       <a
-                        href={`tel:${personal.phone}`}
+                        href={`tel:${personal.phoneTel || personal.phone}`}
                         style={{ fontSize: '0.95rem', fontWeight: 700, color: '#ffffff', fontFamily: 'var(--font-mono)' }}
                       >
                         {personal.phone}
@@ -274,17 +270,23 @@ export default function Contact() {
                   Connect on Socials
                 </h4>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                  <a href={personal.socials.github} target="_blank" rel="noreferrer" className="btn-icon" aria-label="GitHub" title="GitHub">
-                    <Github size={18} />
-                  </a>
-                  <a href={personal.socials.linkedin} target="_blank" rel="noreferrer" className="btn-icon" aria-label="LinkedIn" title="LinkedIn">
-                    <Linkedin size={18} />
-                  </a>
-                  <a href={personal.socials.twitter} target="_blank" rel="noreferrer" className="btn-icon" aria-label="Twitter" title="Twitter">
-                    <Twitter size={18} />
-                  </a>
+                  {personal.socials.github && (
+                    <a href={personal.socials.github} target="_blank" rel="noopener noreferrer" className="btn-icon" aria-label="GitHub" title="GitHub">
+                      <Github size={18} />
+                    </a>
+                  )}
+                  {personal.socials.linkedin && (
+                    <a href={personal.socials.linkedin} target="_blank" rel="noopener noreferrer" className="btn-icon" aria-label="LinkedIn" title="LinkedIn">
+                      <Linkedin size={18} />
+                    </a>
+                  )}
+                  {personal.socials.twitter && (
+                    <a href={personal.socials.twitter} target="_blank" rel="noopener noreferrer" className="btn-icon" aria-label="Twitter" title="Twitter">
+                      <Twitter size={18} />
+                    </a>
+                  )}
                   {personal.socials.discord && (
-                    <a href={personal.socials.discord} target="_blank" rel="noreferrer" className="btn-icon" aria-label="Discord" title="Discord">
+                    <a href={personal.socials.discord} target="_blank" rel="noopener noreferrer" className="btn-icon" aria-label="Discord" title="Discord">
                       <Discord size={18} />
                     </a>
                   )}
@@ -305,44 +307,6 @@ export default function Contact() {
               Fill out the details below and I'll get back with a proposal within 24 hours.
             </p>
 
-            {isSubmitted ? (
-              <div
-                style={{
-                  padding: '3rem 2rem',
-                  textAlign: 'center',
-                  background: 'rgba(16, 185, 129, 0.08)',
-                  border: '1px solid rgba(16, 185, 129, 0.3)',
-                  borderRadius: 'var(--radius-md)'
-                }}
-              >
-                <div
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                    background: '#10b981',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#fff',
-                    margin: '0 auto 1.25rem auto',
-                    boxShadow: '0 0 24px rgba(16, 185, 129, 0.5)'
-                  }}
-                >
-                  <Check size={32} />
-                </div>
-                <h4 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.5rem' }}>Brief Received!</h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-                  Thank you for reaching out. I'll review your project requirements and respond promptly.
-                </p>
-                <button
-                  onClick={() => setIsSubmitted(false)}
-                  className="btn btn-secondary"
-                >
-                  Send Another Brief
-                </button>
-              </div>
-            ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 
                 {/* Name & Email Inputs */}
@@ -486,22 +450,14 @@ export default function Contact() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
                   className="btn btn-primary"
                   style={{ width: '100%', padding: '0.9rem', fontSize: '1rem', marginTop: '0.5rem' }}
                 >
-                  {isSubmitting ? (
-                    <span>Sending Brief...</span>
-                  ) : (
-                    <>
-                      <span>Submit Project Brief</span>
-                      <Send size={18} />
-                    </>
-                  )}
+                  <span>Submit Project Brief</span>
+                  <Send size={18} />
                 </button>
 
               </form>
-            )}
 
           </div>
 

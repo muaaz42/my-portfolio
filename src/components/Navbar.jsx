@@ -9,23 +9,29 @@ export default function Navbar({ currentTheme, setTheme, onOpenCommandPalette })
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 30);
 
-      const sections = ['home', 'what-i-do', 'projects', 'skills', 'about', 'testimonials', 'contact'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 160 && rect.bottom >= 160) {
-            setActiveSection(section);
-            break;
+        const sections = ['home', 'what-i-do', 'projects', 'skills', 'about', 'experience', 'testimonials', 'contact'];
+        for (const section of sections) {
+          const el = document.getElementById(section);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= 160 && rect.bottom >= 160) {
+              setActiveSection(section);
+              break;
+            }
           }
         }
-      }
+        ticking = false;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -70,7 +76,7 @@ export default function Navbar({ currentTheme, setTheme, onOpenCommandPalette })
             fontWeight: 900,
             letterSpacing: '-0.03em',
             textTransform: 'uppercase',
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}
         >
           <MuaazLogo size={34} fillBg={true} />
@@ -165,7 +171,7 @@ export default function Navbar({ currentTheme, setTheme, onOpenCommandPalette })
           <a
             href={portfolioData.personal.whatsappUrl}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="btn btn-primary hide-on-mobile"
             style={{
               padding: '0.65rem 1.25rem',

@@ -224,16 +224,18 @@ export default function ProjectModal({ project, onClose }) {
 
         {/* Action Buttons */}
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          {project.liveUrl && (
           <a
             href={project.liveUrl}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="btn btn-primary"
             style={{ flex: 1, minWidth: '180px' }}
           >
-            <span>View on Behance</span>
+            <span>View Project</span>
             <ExternalLink size={16} />
           </a>
+          )}
           <a
             href="#contact"
             onClick={onClose}

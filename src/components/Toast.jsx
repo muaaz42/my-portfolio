@@ -61,7 +61,7 @@ export function ToastProvider({ children }) {
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               {toast.type === 'success' && <CheckCircle2 size={18} color="var(--accent-emerald)" />}
-              {toast.type === 'error' && <AlertCircle size={18} color="var(--accent-rose)" />}
+              {toast.type === 'error' && <AlertCircle size={18} color="var(--accent-crimson)" />}
               {toast.type === 'info' && <Info size={18} color="var(--accent-primary)" />}
               <span>{toast.message}</span>
             </div>

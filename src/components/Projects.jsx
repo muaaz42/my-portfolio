@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Search, ExternalLink, Eye, Sparkles } from 'lucide-react';
-import { Github } from './Icons';
 import { portfolioData } from '../data/portfolioData';
 import ProjectModal from './ProjectModal';
 
@@ -244,28 +243,19 @@ export default function Projects() {
                     </button>
 
                     <div style={{ display: 'flex', gap: '8px' }}>
+                      {project.liveUrl && (
                       <a
                         href={project.liveUrl}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         className="btn-icon"
                         style={{ width: '2.3rem', height: '2.3rem' }}
-                        aria-label="View on Behance"
-                        title="Behance Showcase"
+                        aria-label="View live project"
+                        title="View live project"
                       >
                         <ExternalLink size={15} />
                       </a>
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="btn-icon"
-                        style={{ width: '2.3rem', height: '2.3rem' }}
-                        aria-label="View on Dribbble"
-                        title="Dribbble Shots"
-                      >
-                        <Github size={15} />
-                      </a>
+                      )}
                     </div>
                   </div>
 

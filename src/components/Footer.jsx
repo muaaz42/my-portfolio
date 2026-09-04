@@ -86,7 +86,7 @@ export default function Footer() {
             <a
               href={personal.whatsappUrl}
               target="_blank"
-              rel="noreferrer"
+            rel="noopener noreferrer"
               className="btn-icon"
               style={{ width: '2.4rem', height: '2.4rem' }}
               aria-label="WhatsApp"
@@ -95,7 +95,7 @@ export default function Footer() {
               <WhatsAppIcon size={16} />
             </a>
             <a
-              href={`tel:${personal.phone}`}
+              href={`tel:${personal.phoneTel || personal.phone}`}
               className="btn-icon"
               style={{ width: '2.4rem', height: '2.4rem' }}
               aria-label="Call"
@@ -103,10 +103,11 @@ export default function Footer() {
             >
               <Phone size={15} />
             </a>
+            {personal.socials.github && (
             <a
               href={personal.socials.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="btn-icon"
               style={{ width: '2.4rem', height: '2.4rem' }}
               aria-label="GitHub"
@@ -114,10 +115,12 @@ export default function Footer() {
             >
               <Github size={16} />
             </a>
+            )}
+            {personal.socials.linkedin && (
             <a
               href={personal.socials.linkedin}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="btn-icon"
               style={{ width: '2.4rem', height: '2.4rem' }}
               aria-label="LinkedIn"
@@ -125,10 +128,12 @@ export default function Footer() {
             >
               <Linkedin size={16} />
             </a>
+            )}
+            {personal.socials.twitter && (
             <a
               href={personal.socials.twitter}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="btn-icon"
               style={{ width: '2.4rem', height: '2.4rem' }}
               aria-label="Twitter"
@@ -136,6 +141,7 @@ export default function Footer() {
             >
               <Twitter size={16} />
             </a>
+            )}
             <button
               onClick={scrollToTop}
               className="btn btn-secondary"

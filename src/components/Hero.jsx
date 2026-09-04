@@ -254,7 +254,11 @@ export default function Hero({ onOpenServiceModal }) {
             >
               <img
                 src={designerHeroImg}
-                alt="Pixel Forge - Graphic Designer"
+                alt="Muaaz, graphic designer"
+                width={373}
+                height={669}
+                fetchPriority="high"
+                decoding="async"
                 style={{
                   display: 'block',
                   width: 'clamp(260px, 28vw, 400px)',
@@ -515,7 +519,7 @@ export default function Hero({ onOpenServiceModal }) {
             {/* Contact No Segment with Tap-to-Call & Quick WhatsApp */}
             <div className="pill-segment" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <a
-                href={`tel:${personal.phone}`}
+                href={`tel:${personal.phoneTel || personal.phone}`}
                 style={{
                   display: 'flex',
                   alignItems: 'center',

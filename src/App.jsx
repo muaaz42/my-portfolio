@@ -15,13 +15,21 @@ import { ToastProvider } from './components/Toast';
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('portfolio_theme') || 'dark';
+    try {
+      return localStorage.getItem('portfolio_theme') || 'dark';
+    } catch {
+      return 'dark';
+    }
   });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('portfolio_theme', theme);
+    try {
+      localStorage.setItem('portfolio_theme', theme);
+    } catch {
+      /* private browsing */
+    }
   }, [theme]);
 
   // Global Ctrl+K / Cmd+K listener
@@ -39,6 +47,7 @@ export default function App() {
   return (
     <ToastProvider>
       <div className="app-container">
+        <a href="#home" className="skip-link">Skip to content</a>
         {/* Subtle Ambient Particle Field */}
         <ParticleCanvas />
 
